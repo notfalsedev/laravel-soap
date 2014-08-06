@@ -11,10 +11,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
      */
     public function boot()
     {
-        $this->app->bindIf('SoapWrapper', function()
-        {
-            return new \Artisaninweb\SoapWrapper\Wrapper();
-        });
+        // Nothing here
     }
 
     /**
@@ -24,7 +21,10 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
      */
     public function register()
     {
-        // Nothing here
+        $this->app->bindIf('SoapWrapper', function()
+        {
+            return new \Artisaninweb\SoapWrapper\Wrapper();
+        });
     }
 
     /**
