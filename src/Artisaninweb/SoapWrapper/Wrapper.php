@@ -2,6 +2,8 @@
 
 namespace Artisaninweb\SoapWrapper;
 
+use Exception;
+
 /**
  * Soap Webservice wrapper
  *
@@ -49,7 +51,7 @@ Class Wrapper {
 
             return $this->services[$name];
         }
-        throw new \Exception('Webservice "'.$name.'" is not found.');
+        throw new Exception('Webservice "'.$name.'" is not found.');
     }
 
     /**
@@ -73,7 +75,7 @@ Class Wrapper {
 
             return $this;
         }
-        throw new \Exception('Service "'.$serviceName.'" already exists, if you want to override it use the override function.');
+        throw new Exception('Service "'.$serviceName.'" already exists, if you want to override it use the override function.');
     }
 
     /**

@@ -2,7 +2,9 @@
 
 namespace Artisaninweb\SoapWrapper;
 
-class ServiceProvider extends \Illuminate\Support\ServiceProvider {
+use \Illuminate\Support\ServiceProvider as LaravelServiceProvider;
+
+class ServiceProvider extends LaravelServiceProvider {
 
     /**
      * Bootstrap the application events.
@@ -21,9 +23,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
      */
     public function register()
     {
-        $this->app->bindIf('SoapWrapper', function()
-        {
-            return new \Artisaninweb\SoapWrapper\Wrapper();
+        $this->app->bindIf('SoapWrapper', function () {
+            return new Wrapper();
         });
     }
 

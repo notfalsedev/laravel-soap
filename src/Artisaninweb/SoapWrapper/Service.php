@@ -2,6 +2,9 @@
 
 namespace Artisaninweb\SoapWrapper;
 
+use SoapClient;
+use SoapHeader;
+
 /**
  * Soap Webservice class
  *
@@ -214,7 +217,7 @@ class Service {
      */
     public function header($namespace,$name,$data=null,$mustunderstand=false,$actor=null)
     {
-       $this->header[] = new \SoapHeader($namespace,$name,$data,$mustunderstand,$actor);
+       $this->header[] = new SoapHeader($namespace,$name,$data,$mustunderstand,$actor);
 
         return $this;
     }
@@ -238,7 +241,7 @@ class Service {
      */
     protected function createClient()
     {
-        $this->client = new \SoapClient($this->getWsdl());
+        $this->client = new SoapClient($this->getWsdl());
 
         return $this;
     }
