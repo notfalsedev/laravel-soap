@@ -24,6 +24,11 @@ class Service {
     protected $wsdl;
 
     /**
+     * @var boolean
+     */
+    protected $trace;
+
+    /**
      * @var resource
      */
     protected $client;
@@ -54,6 +59,29 @@ class Service {
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set trace option - enables tracing of request
+     *
+     * @param $trace
+     * @return $this
+     */
+    public function trace($trace)
+    {
+        $this->trace = $trace;
+
+        return $this;
+    }
+
+    /**
+     * Get the trace option
+     *
+     * @return boolean
+     */
+    public function getTrace()
+    {
+        return $this->trace;
     }
 
     /**
@@ -241,7 +269,11 @@ class Service {
      */
     protected function createClient()
     {
-        $this->client = new SoapClient($this->getWsdl());
+        $options = [
+            'trace' => $this->getTrace()
+        ];
+
+        $this->client = new SoapClient($this->getWsdl(), $options);
 
         return $this;
     }
