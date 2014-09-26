@@ -35,31 +35,37 @@ Usage
 How to add a service to the wrapper.
 
 ```php
+<?php
+
 use Artisaninweb\SoapWrapper\Facades\SoapWrapper;
 
-SoapWrapper::add(function ($service) {
-    $service
-        ->name('currency')
-        ->wsdl('http://currencyconverter.kowabunga.net/converter.asmx?WSDL')
-        ->trace(true)   // This option is optional (parameter: true/false)
-        ->header();     // This option is optional (parameters: $namespace,$name,$data,$mustunderstand,$actor)
-});
-```
+class SoapController {
 
-How to use a added service.
+    public function demo()
+    {
+        // Add a new service to the wrapper
+        SoapWrapper::add(function ($service) {
+            $service
+                ->name('currency')
+                ->wsdl('http://currencyconverter.kowabunga.net/converter.asmx?WSDL')
+                ->trace(true);
+        });
 
-```php
-$data = [
-    'CurrencyFrom' => 'USD',
-    'CurrencyTo'   => 'EUR',
-    'RateDate'     => '2014-06-05',
-    'Amount'       => '1000'
-];
+        $data = [
+            'CurrencyFrom' => 'USD',
+            'CurrencyTo'   => 'EUR',
+            'RateDate'     => '2014-06-05',
+            'Amount'       => '1000'
+        ];
 
-SoapWrapper::service('currency',function($service) use ($data) {
-    var_dump($service->getFunctions());
-    var_dump($service->call('GetConversionAmount',$data)->GetConversionAmountResult);
-});
+        // Using the added service
+        SoapWrapper::service('currency', function ($service) use ($data) {
+            var_dump($service->getFunctions());
+            var_dump($service->call('GetConversionAmount', $data)->GetConversionAmountResult);
+        });
+    }
+
+}
 ```
 
 Usage as model extension
