@@ -116,7 +116,7 @@ class Service {
      */
     public function call($function,$params)
     {
-        return call_user_func_array([$this->client, $function], $params);
+        return call_user_func_array([$this->client, $function], [$params]);
     }
 
     /**
