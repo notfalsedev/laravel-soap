@@ -32,7 +32,7 @@ To use the facade add this to the facades in `app/config/app.php`.
 Usage
 ============
 
-How to add a service to the wrapper.
+How to add a service to the wrapper and use it.
 
 ```php
 <?php
