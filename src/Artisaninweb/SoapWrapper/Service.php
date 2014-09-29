@@ -36,12 +36,13 @@ class Service {
     /**
      * @var array
      */
-    protected $header;
+    protected $headers;
 
     /**
      * Set the name of the service
      *
-     * @param $name
+     * @param string $name
+     *
      * @return $this
      */
     public function name($name)
@@ -64,7 +65,8 @@ class Service {
     /**
      * Set trace option - enables tracing of request
      *
-     * @param $trace
+     * @param boolean $trace
+     *
      * @return $this
      */
     public function trace($trace)
@@ -87,7 +89,8 @@ class Service {
     /**
      * Set the wsdl of the service
      *
-     * @param $wsdl
+     * @param string $wsdl
+     *
      * @return $this
      */
     public function wsdl($wsdl)
@@ -110,20 +113,27 @@ class Service {
     /**
      * Do a soap call on the webservice client
      *
-     * @param $function
-     * @param $params
+     * @param string $function
+     * @param array  $params
+     *
      * @return mixed
      */
     public function call($function,$params)
     {
+        if(!empty($this->headers))
+        {
+            $this->setSoapHeaders();
+        }
+
         return call_user_func_array([$this->client, $function], [$params]);
     }
 
     /**
      * Allias to do a soap call on the webservice client
      *
-     * @param $function
-     * @param $params
+     * @param string $function
+     * @param array  $params
+     *
      * @return mixed
      */
     public function SoapCall($function,$params)
@@ -134,11 +144,12 @@ class Service {
     /**
      * Do soap request
      *
-     * @param $request
-     * @param $location
-     * @param $action
-     * @param $version
-     * @param $one_way
+     * @param string $request
+     * @param string $location
+     * @param string $action
+     * @param string $version
+     * @param string $one_way
+     *
      * @return mixed
      */
     public function doRequest($request,$location,$action,$version,$one_way)
@@ -209,8 +220,9 @@ class Service {
     /**
      * Set a new cookie
      *
-     * @param $name
-     * @param $value
+     * @param string $name
+     * @param string $value
+     *
      * @return $this
      */
     public function setCookie($name,$value)
@@ -224,6 +236,7 @@ class Service {
      * Set the location
      *
      * @param string $location
+     *
      * @return $this
      */
     public function setLocation($location='')
@@ -236,16 +249,17 @@ class Service {
     /**
      * Create a new SoapHeader
      *
-     * @param      $namespace
-     * @param      $name
-     * @param null $data
-     * @param bool $mustunderstand
-     * @param null $actor
+     * @param string $namespace
+     * @param string $name
+     * @param null   $data
+     * @param bool   $mustUnderstand
+     * @param null   $actor
+     *
      * @return $this
      */
-    public function header($namespace,$name,$data=null,$mustunderstand=false,$actor=null)
+    public function header($namespace,$name,$data=null,$mustUnderstand=false,$actor=null)
     {
-       $this->header[] = new SoapHeader($namespace,$name,$data,$mustunderstand,$actor);
+       $this->headers[] = new SoapHeader($namespace,$name,$data,$mustUnderstand,$actor);
 
         return $this;
     }
@@ -255,7 +269,7 @@ class Service {
      *
      * @return $this
      */
-    public function setSoapHeaders()
+    protected function setSoapHeaders()
     {
         $this->client->__setSoapHeaders($this->headers);
 

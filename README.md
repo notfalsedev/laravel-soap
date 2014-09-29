@@ -35,34 +35,49 @@ Usage
 How to add a service to the wrapper.
 
 ```php
-SoapWrapper::add(function ($service) {
-    $service->name('currency')->wsdl('http://currencyconverter.kowabunga.net/converter.asmx?WSDL');
-});
-```
+<?php
 
-How to use a added service.
+use Artisaninweb\SoapWrapper\Facades\SoapWrapper;
 
-```php
-$data = [
-    'CurrencyFrom' => 'USD',
-    'CurrencyTo'   => 'EUR',
-    'RateDate'     => '2014-06-05',
-    'Amount'       => '1000'
-];
+class SoapController {
 
-SoapWrapper::service('currency',function($service) use ($data) {
-    var_dump($service->getFunctions());
-    var_dump($service->call('GetConversionAmount',$data)->GetConversionAmountResult);
-});
+    public function demo()
+    {
+        // Add a new service to the wrapper
+        SoapWrapper::add(function ($service) {
+            $service
+                ->name('currency')
+                ->wsdl('http://currencyconverter.kowabunga.net/converter.asmx?WSDL')
+                ->trace(true)   // This option is optional (parameter: true/false)
+                ->header();     // This option is optional (parameters: $namespace,$name,$data,$mustunderstand,$actor)
+        });
+
+        $data = [
+            'CurrencyFrom' => 'USD',
+            'CurrencyTo'   => 'EUR',
+            'RateDate'     => '2014-06-05',
+            'Amount'       => '1000'
+        ];
+
+        // Using the added service
+        SoapWrapper::service('currency', function ($service) use ($data) {
+            var_dump($service->getFunctions());
+            var_dump($service->call('GetConversionAmount', $data)->GetConversionAmountResult);
+        });
+    }
+
+}
 ```
 
 Usage as model extension
 ============
 
-Like Eloquent you can extent the SoapService on you model.
+Like Eloquent you can extent the SoapService on your model.
 See example:
 
 ```php
+<?php
+
 use Artisaninweb\SoapWrapper\Extension\SoapService;
 
 class Soap extends SoapService {
@@ -76,6 +91,11 @@ class Soap extends SoapService {
      * @var string
      */
     protected $wsdl = 'http://currencyconverter.kowabunga.net/converter.asmx?WSDL';
+    
+    /**
+     * @var boolean
+     */
+    protected $trace = true;
 
     /**
      * Get all the available functions
