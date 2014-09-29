@@ -3,6 +3,7 @@
 namespace Artisaninweb\SoapWrapper;
 
 use Exception;
+use Closure;
 
 /**
  * Soap Webservice wrapper
@@ -49,7 +50,7 @@ Class Wrapper {
      * @return mixed
      * @throws \Exception
      */
-    public function service($name,$callback)
+    public function service($name, Closure $callback)
     {
         if(!empty($this->services[$name]))
         {
@@ -67,7 +68,7 @@ Class Wrapper {
      * @return $this
      * @throws \Exception
      */
-    public function add($service)
+    public function add(Closure $service)
     {
         $client = new Service();
 
@@ -91,7 +92,7 @@ Class Wrapper {
      * @param $service
      * @return $this
      */
-    public function override($service)
+    public function override(Closure $service)
     {
         $client = new Service();
 
