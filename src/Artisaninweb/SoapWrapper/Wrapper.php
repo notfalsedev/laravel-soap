@@ -15,6 +15,11 @@ Class Wrapper {
     /**
      * @var array
      */
+    protected $clients;
+
+    /**
+     * @var array
+     */
     protected $services;
 
     /**
@@ -22,7 +27,8 @@ Class Wrapper {
      */
     public function __construct()
     {
-        $this->clients = [];
+        $this->clients  = [];
+        $this->services = [];
     }
 
     /**
