@@ -283,7 +283,7 @@ class Service {
      *
      * @return $this
      */
-    public function setCookie($name,$value)
+    public function cookie($name,$value)
     {
         $this->client->__setCookie($name,$value);
 
@@ -297,7 +297,7 @@ class Service {
      *
      * @return $this
      */
-    public function setLocation($location='')
+    public function location($location='')
     {
         $this->client->__setLocation($location);
 
