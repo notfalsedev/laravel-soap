@@ -49,6 +49,14 @@ class Service {
     protected $options;
 
     /**
+     * The constructor
+     */
+    public function __construct()
+    {
+      $this->options = [];
+    }
+
+    /**
      * Set the name of the service
      *
      * @param string $name
