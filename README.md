@@ -48,8 +48,10 @@ class SoapController {
             $service
                 ->name('currency')
                 ->wsdl('http://currencyconverter.kowabunga.net/converter.asmx?WSDL')
-                ->trace(true)   // This option is optional (parameter: true/false)
-                ->header();     // This option is optional (parameters: $namespace,$name,$data,$mustunderstand,$actor)
+                ->trace(true)                                                   // Optional: (parameter: true/false)
+                ->header()                                                      // Optional: (parameters: $namespace,$name,$data,$mustunderstand,$actor)
+                ->cache(WSDL_CACHE_NONE)                                        // Optional: Set the WSDL cache
+                ->options(['login' => 'username', 'password' => 'password']);   // Optional: Set some extra options
         });
 
         $data = [

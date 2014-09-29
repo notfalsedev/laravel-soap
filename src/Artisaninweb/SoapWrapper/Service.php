@@ -39,6 +39,16 @@ class Service {
     protected $headers;
 
     /**
+     * @var string
+     */
+    protected $cache;
+
+    /**
+     * @var array
+     */
+    protected $options;
+
+    /**
      * Set the name of the service
      *
      * @param string $name
@@ -84,6 +94,54 @@ class Service {
     public function getTrace()
     {
         return $this->trace;
+    }
+
+    /**
+     * Set the WSDL cache
+     *
+     * @param $cache
+     *
+     * @return $this
+     */
+    public function cache($cache)
+    {
+        $this->cache = $cache;
+
+        return $this;
+    }
+
+    /**
+     * Get the WSDL cache
+     *
+     * @return string
+     */
+    public function getCache()
+    {
+        return $this->cache;
+    }
+
+    /**
+     * Set the extra options on the SoapClient
+     *
+     * @param array $options
+     *
+     * @return $this
+     */
+    public function options(array $options)
+    {
+        $this->options = $options;
+
+        return $this;
+    }
+
+    /**
+     * Get the extra options
+     *
+     * @return array
+     */
+    public function getOptions()
+    {
+        return $this->options;
     }
 
     /**
@@ -284,8 +342,11 @@ class Service {
     protected function createClient()
     {
         $options = [
-            'trace' => $this->getTrace()
+            'trace'      => $this->getTrace(),
+            'cache_wsdl' => $this->getCache()
         ];
+
+        $options = array_merge($options,$this->getOptions());
 
         $this->client = new SoapClient($this->getWsdl(), $options);
 
