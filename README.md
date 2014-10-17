@@ -66,7 +66,7 @@ class SoapController {
         // Using the added service
         SoapWrapper::service('currency', function ($service) use ($data) {
             var_dump($service->getFunctions());
-            var_dump($service->call('GetConversionAmount', $data)->GetConversionAmountResult);
+            var_dump($service->call('GetConversionAmount', [$data])->GetConversionAmountResult);
         });
     }
 
