@@ -16,11 +16,6 @@ abstract class SoapService extends Service {
     /**
      * @var string
      */
-    protected $name;
-
-    /**
-     * @var string
-     */
     protected $wsdl;
 
     /**
@@ -30,14 +25,14 @@ abstract class SoapService extends Service {
      */
     public function __construct()
     {
-        if(!empty($this->name) && !empty($this->wsdl))
+        if(!empty($this->wsdl))
         {
-            $this->name($this->name);
-            $this->wsdl($this->wsdl);
+            $this->wsdl($this->wsdl)
+                 ->createClient();
 
             return;
         }
-        throw new Exception("The variables 'name' and 'wsdl' must be set.");
+        throw new Exception("The variable 'wsdl' must be set.");
     }
 
 }

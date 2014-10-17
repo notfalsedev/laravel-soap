@@ -78,6 +78,8 @@ Class Wrapper {
 
         if(empty($this->services[$serviceName]))
         {
+            $client->createClient();
+            
             $this->services[$serviceName] = $client;
 
             return $this;
