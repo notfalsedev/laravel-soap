@@ -76,10 +76,10 @@ Class Wrapper {
 
         $serviceName = $client->getName();
 
-        $client->createClient();
-
         if(empty($this->services[$serviceName]))
         {
+            $client->createClient();
+            
             $this->services[$serviceName] = $client;
 
             return $this;
