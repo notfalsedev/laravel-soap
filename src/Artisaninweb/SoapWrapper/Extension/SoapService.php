@@ -27,7 +27,8 @@ abstract class SoapService extends Service {
     {
         if(!empty($this->wsdl))
         {
-            $this->wsdl($this->wsdl);
+            $this->wsdl($this->wsdl)
+                 ->createClient();
 
             return;
         }

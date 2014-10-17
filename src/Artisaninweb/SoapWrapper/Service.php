@@ -155,7 +155,7 @@ class Service {
     {
         $this->wsdl = $wsdl;
 
-        return $this->createClient();
+        return $this;
     }
 
     /**
@@ -183,7 +183,7 @@ class Service {
             $this->setSoapHeaders();
         }
 
-        return call_user_func_array([$this->client, $function], [$params]);
+        return call_user_func_array([$this->client, $function], $params);
     }
 
     /**
@@ -305,6 +305,25 @@ class Service {
     }
 
     /**
+     * Create the Soap client
+     *
+     * @return $this
+     */
+    public function createClient()
+    {
+        $options = [
+            'trace'      => $this->getTrace(),
+            'cache_wsdl' => $this->getCache()
+        ];
+
+        $options = array_merge($options, $this->getOptions());
+
+        $this->client = new SoapClient($this->getWsdl(), $options);
+
+        return $this;
+    }
+
+    /**
      * Create a new SoapHeader
      *
      * @param string $namespace
@@ -330,25 +349,6 @@ class Service {
     protected function setSoapHeaders()
     {
         $this->client->__setSoapHeaders($this->headers);
-
-        return $this;
-    }
-
-    /**
-     * Create the Soap client
-     *
-     * @return $this
-     */
-    protected function createClient()
-    {
-        $options = [
-            'trace'      => $this->getTrace(),
-            'cache_wsdl' => $this->getCache()
-        ];
-
-        $options = array_merge($options,$this->getOptions());
-
-        $this->client = new SoapClient($this->getWsdl(), $options);
 
         return $this;
     }
