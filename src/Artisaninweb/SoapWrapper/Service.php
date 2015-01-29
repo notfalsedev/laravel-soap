@@ -336,9 +336,14 @@ class Service {
      */
     public function header($namespace,$name,$data=null,$mustUnderstand=false,$actor=null)
     {
-        if($actor) $this->headers[] = new SoapHeader($namespace,$name,$data,$mustUnderstand,$actor);
-        else $this->headers[] = new SoapHeader($namespace,$name,$data,$mustUnderstand);
-
+        if($actor)
+        {
+            $this->headers[] = new SoapHeader($namespace,$name,$data,$mustUnderstand,$actor);
+        }
+        else
+        {
+            $this->headers[] = new SoapHeader($namespace,$name,$data,$mustUnderstand);
+        }
         return $this;
     }
 
