@@ -246,13 +246,23 @@ class Service {
     }
 
     /**
+     * Get the last request headers
+     *
+     * @return mixed
+     */
+    public function getLastRequestHeaders()
+    {
+        return $this->client->__getLastRequestHeaders();
+    }
+
+    /**
      * Get the last response headers
      *
      * @return mixed
      */
     public function getLastResponseHeaders()
     {
-        return $this->client->__getLastRequestHeaders();
+        return $this->client->__getLastResponseHeaders();
     }
 
     /**
