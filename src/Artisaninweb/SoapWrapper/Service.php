@@ -178,12 +178,14 @@ class Service {
      */
     public function call($function,$params)
     {
+
+
         if(!empty($this->headers))
         {
             $this->setSoapHeaders();
         }
-
-        return call_user_func_array([$this->client, $function], $params);
+        
+        return call_user_func([$this->client, $function], $params);
     }
 
     /**
@@ -322,8 +324,8 @@ class Service {
     public function createClient()
     {
         $options = [
-            'trace'      => $this->getTrace(),
-            'cache_wsdl' => $this->getCache()
+        'trace'      => $this->getTrace(),
+        'cache_wsdl' => $this->getCache()
         ];
 
         $options = array_merge($options, $this->getOptions());
@@ -367,6 +369,20 @@ class Service {
         $this->client->__setSoapHeaders($this->headers);
 
         return $this;
+    }
+
+    /**
+     * Use magic function
+     *
+     * @param string $name name of soap function
+     * @param mixed $arguments parameters for soap function
+     *
+     * @return mixed
+     */
+
+    public function __call($name, $arguments) 
+    {
+        return $this->call($name, $arguments[0]);
     }
 
 }
