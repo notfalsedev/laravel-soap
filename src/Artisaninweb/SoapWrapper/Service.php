@@ -44,6 +44,11 @@ class Service {
     protected $cache;
 
     /**
+     * @var bool
+     */
+    protected $certificate = false;
+
+    /**
      * @var array
      */
     protected $options = [];
@@ -301,6 +306,24 @@ class Service {
     }
 
     /**
+     * Set certificate
+     *
+     * @param string $certificate
+     *
+     * @return $this
+     */
+    public function certificate($certificate)
+    {
+        if($certificate && !is_null($certificate && !empty($certificate))){
+            $this->certificate = $certificate;
+        } else {
+            $this->certificate = false;
+        }
+
+        return $this;
+    }
+
+    /**
      * Set the location
      *
      * @param string $location
@@ -325,6 +348,10 @@ class Service {
             'trace'      => $this->getTrace(),
             'cache_wsdl' => $this->getCache()
         ];
+
+        if($this->certificate){
+            $options['local_cert'] = $this->certificate;
+        }
 
         $options = array_merge($options, $this->getOptions());
 
