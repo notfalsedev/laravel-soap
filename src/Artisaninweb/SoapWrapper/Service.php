@@ -215,7 +215,7 @@ class Service
       $this->setSoapHeaders();
     }
 
-    return call_user_func([$this->client, $function], $params);
+    return call_user_func_array([$this->client, $function], $params);
   }
 
   /**
