@@ -381,6 +381,17 @@ class Service
   }
 
   /**
+   * @param SoapHeader $header
+   *
+   * @return $this
+   */
+  public function addHeader($header)
+  {
+    $this->headers[] = $header;
+    return $this;
+  }
+
+  /**
    * Set the Soap headers
    *
    * @return $this
