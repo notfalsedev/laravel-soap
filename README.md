@@ -50,6 +50,7 @@ class SoapController {
                 ->wsdl('http://currencyconverter.kowabunga.net/converter.asmx?WSDL')
                 ->trace(true)                                                   // Optional: (parameter: true/false)
                 ->header()                                                      // Optional: (parameters: $namespace,$name,$data,$mustunderstand,$actor)
+                ->customHeader($customHeader)                                   // Optional: (parameters: $customerHeader) Use this to add a custom SoapHeader or extended class                
                 ->cookie()                                                      // Optional: (parameters: $name,$value)
                 ->location()                                                    // Optional: (parameter: $location)
                 ->certificate()                                                 // Optional: (parameter: $certLocation)
