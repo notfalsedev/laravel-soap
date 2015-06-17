@@ -385,7 +385,7 @@ class Service
    *
    * @return $this
    */
-  public function addHeader($header)
+  public function customHeader($header)
   {
     $this->headers[] = $header;
     return $this;
