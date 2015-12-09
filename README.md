@@ -1,11 +1,13 @@
 Laravel SoapClient Wrapper
 ===========================
 
-A SoapClient wrapper integration for Laravel.<br />
+A SoapClient wrapper integration for Laravel / Lumen.<br />
 The documentation will be updated in time.
 
 Installation
 ============
+
+## Laravel
 
 Add `artisaninweb/laravel-soap` as requirement to composer.json
 
@@ -28,6 +30,21 @@ To use the facade add this to the facades in `app/config/app.php`.
 ```php
 'SoapWrapper' => 'Artisaninweb\SoapWrapper\Facades\SoapWrapper'
 ```
+
+## Lumen
+
+Open `bootstrap/app.php` and register the required service provider:
+```php
+$app->register(Artisaninweb\SoapWrapper\ServiceProvider::class);
+```
+
+register class alias:
+```php
+class_alias('Artisaninweb\SoapWrapper\Facades\SoapWrapper', 'SoapWrapper');
+```
+
+*Facades must be enabled.*
+
 
 Usage
 ============
