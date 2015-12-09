@@ -164,6 +164,8 @@ class Service
   public function getOptions()
   {
     $options = [
+	  'proxy_host' => parse_url($this->getWsdl(), PHP_URL_HOST),
+      'proxy_port' => parse_url($this->getWsdl(), PHP_URL_PORT),
       'trace'      => $this->getTrace(),
       'cache_wsdl' => $this->getCache()
     ];
