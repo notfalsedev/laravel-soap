@@ -53,6 +53,12 @@ class Service
    * @var array
    */
   protected $options = [];
+  
+  /**
+   *
+   * @var string
+   */
+  protected $lastResponse;
 
   /**
    * Set the name of the service
@@ -214,8 +220,10 @@ class Service
     if (!empty($this->headers)) {
       $this->setSoapHeaders();
     }
-
-    return call_user_func_array([$this->client, $function], $params);
+    
+    $this->lastResponse = call_user_func_array([$this->client, $function], $params);
+    
+    return $this->lastResponse;
   }
 
   /**
@@ -265,6 +273,15 @@ class Service
   public function getLastRequest()
   {
     return $this->client->__getLastRequest();
+  }
+  
+  /**
+   * Get the last response without the Soap wrapper.
+   * 
+   * @return type
+   */
+  public function getLastResponseClean(){
+      return $this->lastResponse;
   }
 
   /**
