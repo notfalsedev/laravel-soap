@@ -63,9 +63,9 @@ class SoapController
   /**
    * Use the SoapWrapper
    */
-  public function show() {
+  public function show() 
+  {
     $this->soapWrapper->add('Currency', function ($service) {
-      /** @var Service $service */
       $service
         ->wsdl('http://currencyconverter.kowabunga.net/converter.asmx?WSDL')
         ->trace(true)
