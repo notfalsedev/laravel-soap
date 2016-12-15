@@ -5,19 +5,12 @@ namespace Artisaninweb\SoapWrapper;
 use SoapClient;
 use SoapHeader;
 
-/**
- * Soap Webservice class
- *
- * @package Artisaninweb\SoapWrapper
- * @author  Michael van de Rijt
- */
 class Service
 {
-
   /**
-   * @var string
+   * @var SoapClient
    */
-  protected $name;
+  protected $client;
 
   /**
    * @var string
@@ -28,11 +21,6 @@ class Service
    * @var boolean
    */
   protected $trace;
-
-  /**
-   * @var resource
-   */
-  protected $client;
 
   /**
    * @var array
@@ -47,35 +35,75 @@ class Service
   /**
    * @var bool
    */
-  protected $certificate = false;
+  protected $certificate;
 
   /**
    * @var array
    */
-  protected $options = [];
+  protected $options;
 
   /**
-   * Set the name of the service
+   * @var array
+   */
+  protected $classmap;
+
+  /**
+   * Service constructor.
+   */
+  public function __construct()
+  {
+    $this->wsdl        = null;
+    $this->certificate = false;
+    $this->options     = [];
+    $this->classmap    = [];
+  }
+
+  /**
+   * Set a custom client
    *
-   * @param string $name
+   * @param SoapClient $client
    *
    * @return $this
    */
-  public function name($name)
+  public function client(SoapClient $client)
   {
-    $this->name = $name;
+    $this->client = $client;
 
     return $this;
   }
 
   /**
-   * Get the name of the service
+   * Get the custom client
+   *
+   * @return SoapClient
+   */
+  public function getClient()
+  {
+    return $this->client;
+  }
+
+  /**
+   * Set the wsdl of the service
+   *
+   * @param string $wsdl
+   *
+   * @return $this
+   */
+  public function wsdl($wsdl)
+  {
+    $this->wsdl = $wsdl;
+
+    return $this;
+  }
+
+  /**
+   * Get the wsdl from the service
    *
    * @return string
    */
-  public function getName()
+  public function getWsdl()
   {
-    return $this->name;
+    return $this->wsdl;
   }
 
   /**
@@ -127,6 +155,40 @@ class Service
   }
 
   /**
+   * @param array $classmap
+   *
+   * @return $this
+   */
+  public function classMap(array $classmap)
+  {
+    $this->classmap = $classmap;
+
+    return $this;
+  }
+
+  /**
+   * Get the classmap
+   *
+   * @return array
+   */
+  public function getClassmap()
+  {
+    $classmap = $this->classmap;
+    $classes  = [] ;
+
+    if (!empty($classmap)) {
+      foreach ($classmap as $class) {
+        // Can't use end because of strict mode :(
+        $name = current(array_slice(explode('\\', $class), -1, 1, true));
+
+        $classes[$name] = $class;
+      }
+    }
+
+    return $classes;
+  }
+
+  /**
    * Set the extra options on the SoapClient
    *
    * @param array $options
@@ -141,22 +203,6 @@ class Service
   }
 
   /**
-   * Set the certificate location
-   *
-   * @param string $certificate
-   *
-   * @return $this
-   */
-  public function certificate($certificate)
-  {
-    if ($certificate) {
-      $this->certificate = $certificate;
-    }
-
-    return $this;
-  }
-
-  /**
    * Get the extra options
    *
    * @return array
@@ -165,7 +211,8 @@ class Service
   {
     $options = [
       'trace'      => $this->getTrace(),
-      'cache_wsdl' => $this->getCache()
+      'cache_wsdl' => $this->getCache(),
+      'classmap'   => $this->getClassmap(),
     ];
 
     if ($this->certificate) {
@@ -178,182 +225,17 @@ class Service
   }
 
   /**
-   * Set the wsdl of the service
+   * Set the certificate location
    *
-   * @param string $wsdl
+   * @param string $certificate
    *
    * @return $this
    */
-  public function wsdl($wsdl)
+  public function certificate($certificate)
   {
-    $this->wsdl = $wsdl;
-
-    return $this;
-  }
-
-  /**
-   * Get the wsdl from the service
-   *
-   * @return string
-   */
-  public function getWsdl()
-  {
-    return $this->wsdl;
-  }
-
-  /**
-   * Do a soap call on the webservice client
-   *
-   * @param string $function
-   * @param array  $params
-   *
-   * @return mixed
-   */
-  public function call($function, $params)
-  {
-    if (!empty($this->headers)) {
-      $this->setSoapHeaders();
+    if ($certificate) {
+      $this->certificate = $certificate;
     }
-
-    return call_user_func_array([$this->client, $function], $params);
-  }
-
-  /**
-   * Allias to do a soap call on the webservice client
-   *
-   * @param string $function
-   * @param array  $params
-   *
-   * @return mixed
-   */
-  public function SoapCall($function, $params)
-  {
-    return $this->call($function, $params);
-  }
-
-  /**
-   * Do soap request
-   *
-   * @param string $request
-   * @param string $location
-   * @param string $action
-   * @param string $version
-   * @param string $one_way
-   *
-   * @return mixed
-   */
-  public function doRequest($request, $location, $action, $version, $one_way)
-  {
-    return $this->client->__doRequest($request, $location, $action, $version, $one_way);
-  }
-
-  /**
-   * Get all functions from the service
-   *
-   * @return mixed
-   */
-  public function getFunctions()
-  {
-    return $this->client->__getFunctions();
-  }
-
-  /**
-   * Get the last request
-   *
-   * @return mixed
-   */
-  public function getLastRequest()
-  {
-    return $this->client->__getLastRequest();
-  }
-
-  /**
-   * Get the last response
-   *
-   * @return mixed
-   */
-  public function getLastResponse()
-  {
-    return $this->client->__getLastResponse();
-  }
-
-  /**
-   * Get the last request headers
-   *
-   * @return mixed
-   */
-  public function getLastRequestHeaders()
-  {
-    return $this->client->__getLastRequestHeaders();
-  }
-
-  /**
-   * Get the last response headers
-   *
-   * @return mixed
-   */
-  public function getLastResponseHeaders()
-  {
-    return $this->client->__getLastResponseHeaders();
-  }
-
-  /**
-   * Get the types
-   *
-   * @return mixed
-   */
-  public function getTypes()
-  {
-    return $this->client->__getTypes();
-  }
-
-  /**
-   * Get all the set cookies
-   *
-   * @return mixed
-   */
-  public function getCookies()
-  {
-    return $this->client->__cookies;
-  }
-
-  /**
-   * Set a new cookie
-   *
-   * @param string $name
-   * @param string $value
-   *
-   * @return $this
-   */
-  public function cookie($name, $value)
-  {
-    $this->client->__setCookie($name, $value);
-
-    return $this;
-  }
-
-  /**
-   * Set the location
-   *
-   * @param string $location
-   *
-   * @return $this
-   */
-  public function location($location = '')
-  {
-    $this->client->__setLocation($location);
-
-    return $this;
-  }
-
-  /**
-   * Create the Soap client
-   *
-   * @return $this
-   */
-  public function createClient()
-  {
-    $this->client = new SoapClient($this->getWsdl(), $this->getOptions());
 
     return $this;
   }
@@ -380,7 +262,10 @@ class Service
     return $this;
   }
 
+
   /**
+   * Set the Soap headers
+   *
    * @param SoapHeader $header
    *
    * @return $this
@@ -388,19 +273,7 @@ class Service
   public function customHeader($header)
   {
     $this->headers[] = $header;
-    return $this;
-  }
-
-  /**
-   * Set the Soap headers
-   *
-   * @return $this
-   */
-  protected function setSoapHeaders()
-  {
-    $this->client->__setSoapHeaders($this->headers);
 
     return $this;
   }
-
 }
