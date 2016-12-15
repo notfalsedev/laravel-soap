@@ -1,8 +1,11 @@
 Laravel SoapClient Wrapper
 ===========================
 
-A SoapClient wrapper integration for Laravel.<br />
-The documentation will be updated in time.
+A SoapClient wrapper integration for Laravel.<br/>
+Makes it easy to use Soap in a Laravel application.<br/>
+
+Please report any bugs or features here: <br/>
+https://github.com/artisaninweb/laravel-soap/issues/
 
 Installation
 ============
@@ -74,7 +77,18 @@ class SoapController
           GetConversionAmountResponse::class,
         ]);
     });
+    
+    // Without classmap
+    $response = $this->soapWrapper->call('Currency.GetConversionAmount', [
+      'CurrencyFrom' => 'USD', 
+      'CurrencyTo'   => 'EUR', 
+      'RateDate'     => '2014-06-05', 
+      'Amount'       => '1000',
+    ]);
+     
+    var_dump($response);
 
+    // With classmap
     $response = $this->soapWrapper->call('Currency.GetConversionAmount', [
       new GetConversionAmount('USD', 'EUR', '2014-06-05', '1000')
     ]);
@@ -84,6 +98,42 @@ class SoapController
   }
 }
 ```
+
+Service functions
+============
+```php
+$this->soapWrapper->add('Currency', function ($service) {
+    ->name()                 // The name you want to five your service
+    ->wsdl()                 // The WSDL url
+    ->trace(true)            // Optional: (parameter: true/false)
+    ->header()               // Optional: (parameters: $namespace,$name,$data,$mustunderstand,$actor)
+    ->customHeader()         // Optional: (parameters: $customerHeader) Use this to add a custom SoapHeader or extended class                
+    ->cookie()               // Optional: (parameters: $name,$value)
+    ->location()             // Optional: (parameter: $location)
+    ->certificate()          // Optional: (parameter: $certLocation)
+    ->cache(WSDL_CACHE_NONE) // Optional: Set the WSDL cache
+    
+    // Optional: Set some extra options
+    ->options([
+        'login' => 'username', 
+        'password' => 'password'
+    ])
+    
+    // Optional: Classmap
+    ->classmap([
+      GetConversionAmount::class,
+      GetConversionAmountResponse::class,
+    ]);
+});
+```
+
+Classmap
+============
+
+If you are using classmap you can add folders like for example:
+- App\Soap
+- App\Soap\Request
+- App\Soap\Response
 
 Request: App\Soap\Request\GetConversionAmount
 

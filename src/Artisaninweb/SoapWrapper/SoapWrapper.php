@@ -68,8 +68,9 @@ class SoapWrapper
               $service->{$method}($value);
             } else {
                 throw new ServiceMethodNotExists(sprintf(
-                  "Method '%s' does not exists on a service.",
-                  $method
+                  "Method '%s' does not exists on the %s service.",
+                  $method,
+                  $name
                 ));
               }
           }
