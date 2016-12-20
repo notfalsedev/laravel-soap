@@ -53,6 +53,7 @@ class Service
   public function __construct()
   {
     $this->wsdl        = null;
+    $this->client      = null;
     $this->certificate = false;
     $this->options     = [];
     $this->classmap    = [];
@@ -261,7 +262,6 @@ class Service
 
     return $this;
   }
-
 
   /**
    * Set the Soap headers

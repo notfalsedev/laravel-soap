@@ -3,6 +3,7 @@
 namespace Artisaninweb\SoapWrapper;
 
 use Closure;
+use SoapClient;
 use Artisaninweb\SoapWrapper\Exceptions\ServiceNotFound;
 use Artisaninweb\SoapWrapper\Exceptions\ServiceAlreadyExists;
 use Artisaninweb\SoapWrapper\Exceptions\ServiceMethodNotExists;
@@ -104,11 +105,10 @@ class SoapWrapper
     if ($this->has($name)) {
       /** @var Service $service */
       $service = $this->services[$name];
+      $client  = $service->getClient();
 
-      if (is_null($service->getClient())) {
+      if (!$client instanceof SoapClient) {
         $client = new Client($service->getWsdl(), $service->getOptions());
-      } else {
-        $client = $service->getClient();
       }
 
       return $closure($client);
