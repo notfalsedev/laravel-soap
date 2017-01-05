@@ -31,7 +31,7 @@ Add the service provider in `app/config/app.php`.
 To use the facade add this to the facades in `app/config/app.php`.
 
 ```php
-'SoapWrapper' => 'Artisaninweb\SoapWrapper\Facades\SoapWrapper'
+'SoapWrapper' => 'Artisaninweb\SoapWrapper\Facade'
 ```
 
 ## Lumen
@@ -43,7 +43,7 @@ $app->register(Artisaninweb\SoapWrapper\ServiceProvider::class);
 
 register class alias:
 ```php
-class_alias('Artisaninweb\SoapWrapper\Facades\SoapWrapper', 'SoapWrapper');
+class_alias('Artisaninweb\SoapWrapper\Facade', 'SoapWrapper');
 ```
 
 *Facades must be enabled.*
