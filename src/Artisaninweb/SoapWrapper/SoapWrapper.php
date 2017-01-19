@@ -40,6 +40,8 @@ class SoapWrapper
       $closure($service);
 
       $this->services[$name] = $service;
+      
+      $service->client(new Client( $service->getWsdl(), $service->getOptions() ));
 
       return $this;
     }
@@ -109,6 +111,7 @@ class SoapWrapper
 
       if (!$client instanceof SoapClient) {
         $client = new Client($service->getWsdl(), $service->getOptions());
+        $service->client($client);
       }
 
       return $closure($client);
