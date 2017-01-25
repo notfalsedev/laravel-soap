@@ -127,7 +127,7 @@ class SoapWrapper
    */
   public function call($call, $data = [])
   {
-    list($name, $function) = explode('.', $call);
+    list($name, $function) = explode('.', $call, 2);
 
     return $this->client($name, function ($client) use ($function, $data) {
       /** @var Client $client */
