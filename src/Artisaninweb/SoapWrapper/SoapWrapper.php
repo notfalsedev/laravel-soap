@@ -100,22 +100,23 @@ class SoapWrapper
    * @return mixed
    * @throws ServiceNotFound
    */
-  public function client($name, Closure $closure = null)
-  {
-    if ($this->has($name)) {
-      /** @var Service $service */
-      $service = $this->services[$name];
-      $client  = $service->getClient();
+    public function client($name, Closure $closure = null)
+    {
+        if ($this->has($name)) {
+            /** @var Service $service */
+            $service = $this->services[$name];
 
-      if (!$client instanceof SoapClient) {
-        $client = new Client($service->getWsdl(), $service->getOptions());
-      }
+            if (is_null($service->getClient())) {
+                $client = new Client($service->getWsdl(), $service->getOptions());
+            } else {
+                $client = $service->getClient();
+            }
 
-      return $closure($client);
+            return $closure($client);
+        }
+
+        throw new ServiceNotFound("Service '" . $name . "' not found.");
     }
-
-    throw new ServiceNotFound("Service '" . $name . "' not found.");
-  }
 
   /**
    * A easy access call method
