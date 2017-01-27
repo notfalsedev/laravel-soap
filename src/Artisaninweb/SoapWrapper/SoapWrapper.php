@@ -130,8 +130,8 @@ class SoapWrapper
     list($name, $function) = explode('.', $call);
 
     return $this->client($name, function ($client) use ($function, $data) {
-      /** @var Client $client */
-      return $client->SoapCall($function, $data);
+      /** @var Client $client */      
+      return $client->SoapCall($function, ($client->_soap_version == 1) ? [$data]:$data);
     });
   }
 
