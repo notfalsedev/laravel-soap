@@ -120,7 +120,7 @@ Service functions
 ============
 ```php
 $this->soapWrapper->add('Currency', function ($service) {
-    ->name()                 // The name you want to five your service
+    ->name()                 // The name you want to give your service
     ->wsdl()                 // The WSDL url
     ->trace(true)            // Optional: (parameter: true/false)
     ->header()               // Optional: (parameters: $namespace,$name,$data,$mustunderstand,$actor)
