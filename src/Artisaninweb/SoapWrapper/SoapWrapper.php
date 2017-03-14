@@ -134,10 +134,6 @@ class SoapWrapper
 
     return $this->client($name, function ($client) use ($function, $data) {
       /** @var Client $client */
-      if ($client->_soap_version == 1) {
-        $data = [$data];
-      }
-      
       return $client->SoapCall($function, $data);
     });
   }
