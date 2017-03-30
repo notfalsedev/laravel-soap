@@ -107,7 +107,7 @@ class SoapWrapper
             $service = $this->services[$name];
 
             if (is_null($service->getClient())) {
-                $client = new Client($service->getWsdl(), $service->getOptions());
+                $client = new Client($service->getWsdl(), $service->getOptions(), $service->getHeaders());
               
                 $service->client($client);
             } else {
