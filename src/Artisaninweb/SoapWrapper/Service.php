@@ -57,6 +57,7 @@ class Service
     $this->certificate = false;
     $this->options     = [];
     $this->classmap    = [];
+    $this->headers     = [];
   }
 
   /**
@@ -240,6 +241,16 @@ class Service
 
     return $this;
   }
+
+    /**
+     * Get the headers
+     *
+     * @return array
+     */
+    public function getHeaders()
+    {
+        return $this->headers;
+    }
 
   /**
    * Create a new SoapHeader
