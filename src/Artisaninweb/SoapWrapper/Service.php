@@ -180,8 +180,13 @@ class Service
 
     if (!empty($classmap)) {
       foreach ($classmap as $class) {
-        // Can't use end because of strict mode :(
-        $name = current(array_slice(explode('\\', $class), -1, 1, true));
+        if (is_array($class)){
+          $name = key($class);
+          $class = $class[key($class)];
+        }else{
+          // Can't use end because of strict mode :(
+          $name = current(array_slice(explode('\\', $class), -1, 1, true));
+        }
 
         $classes[$name] = $class;
       }
