@@ -17,5 +17,15 @@
         "psr-0": {
             "Artisaninweb\\SoapWrapper": "src/"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Artisaninweb\\SoapWrapper\\ServiceProvider"
+            ],
+            "aliases": {
+                "SoapWrapper": "Artisaninweb\\SoapWrapper\\Facade"
+            }
+        }
     }
 }
