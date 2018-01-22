@@ -22,6 +22,8 @@ Add `artisaninweb/laravel-soap` as requirement to composer.json
 }
 ```
 
+> If you're using Laravel 5.5 or higher you can skip the two config setups below.
+
 Add the service provider in `app/config/app.php`.
 
 ```php
