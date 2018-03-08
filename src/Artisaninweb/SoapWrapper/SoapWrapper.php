@@ -128,13 +128,13 @@ class SoapWrapper
    *
    * @return mixed
    */
-  public function call($call, $data = [])
+  public function call($call, $data = [], $options = [])
   {
     list($name, $function) = explode('.', $call, 2);
 
-    return $this->client($name, function ($client) use ($function, $data) {
+    return $this->client($name, function ($client) use ($function, $data, $options) {
       /** @var Client $client */
-      return $client->SoapCall($function, $data);
+      return $client->SoapCall($function, $data, $options);
     });
   }
 
