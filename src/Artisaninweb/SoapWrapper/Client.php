@@ -94,7 +94,7 @@ class Client extends SoapClient
    */
   public function getCookies()
   {
-    return $this->__cookies;
+    return $this->__getCookies();
   }
 
   /**
