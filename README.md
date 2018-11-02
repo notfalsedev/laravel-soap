@@ -12,7 +12,7 @@ Installation
 
 ## Laravel
 
-####Installation for Laravel 5.2 and above:
+#### Installation for Laravel 5.2 and above:
 
 Run `composer require artisaninweb/laravel-soap`
 
@@ -29,7 +29,7 @@ To use the alias, add this to the aliases in `app/config/app.php`.
 ```
 
 
-####Installation for Laravel 5.1 and below :
+#### Installation for Laravel 5.1 and below :
 
 
 Add `artisaninweb/laravel-soap` as requirement to composer.json
