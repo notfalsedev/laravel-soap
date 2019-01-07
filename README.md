@@ -25,7 +25,7 @@ Artisaninweb\SoapWrapper\ServiceProvider::class,
 To use the alias, add this to the aliases in `app/config/app.php`.
 
 ```php
-'SoapWrapper' => Artisaninweb\SoapWrapper\Facade\SoapWrapper::class,  
+'SoapWrapper' => Artisaninweb\SoapWrapper\SoapWrapper::class,  
 ```
 
 
