@@ -3,7 +3,6 @@
 namespace Artisaninweb\SoapWrapper;
 
 use Closure;
-use SoapClient;
 use Artisaninweb\SoapWrapper\Exceptions\ServiceNotFound;
 use Artisaninweb\SoapWrapper\Exceptions\ServiceAlreadyExists;
 use Artisaninweb\SoapWrapper\Exceptions\ServiceMethodNotExists;
