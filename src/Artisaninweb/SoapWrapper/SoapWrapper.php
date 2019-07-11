@@ -64,15 +64,14 @@ class SoapWrapper
                     $service = new Service();
 
                     foreach ($methods as $method => $value) {
-                        if (method_exists($service, $method)) {
-                            $service->{$method}($value);
-                        } else {
+                        if (!method_exists($service, $method)) {
                             throw new ServiceMethodNotExists(sprintf(
                                 "Method '%s' does not exists on the %s service.",
                                 $method,
                                 $name
                             ));
                         }
+                        $service->{$method}($value);
                     }
 
                     $this->services[$name] = $service;
@@ -105,12 +104,11 @@ class SoapWrapper
             /** @var Service $service */
             $service = $this->services[$name];
 
-            if (is_null($service->getClient())) {
-                $client = new Client($service->getWsdl(), $service->getOptions(), $service->getHeaders());
+            $client = $service->getClient();
 
+            if (is_null($client)) {
+                $client = new Client($service->getWsdl(), $service->getOptions(), $service->getHeaders());
                 $service->client($client);
-            } else {
-                $client = $service->getClient();
             }
 
             return $closure($client);
