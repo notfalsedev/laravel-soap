@@ -121,7 +121,8 @@ class SoapWrapper
      * A easy access call method
      *
      * @param string $call
-     * @param array  $data
+     * @param array  $data = []
+     * @param array $options = []
      *
      * @return mixed
      */
