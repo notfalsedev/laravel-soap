@@ -118,12 +118,12 @@ class SoapController
     });
 
     // Without classmap
-    $response = $this->soapWrapper->call('Currency.GetConversionAmount', [
+    $response = $this->soapWrapper->call('Currency.GetConversionAmount', array([
       'CurrencyFrom' => 'USD', 
       'CurrencyTo'   => 'EUR', 
       'RateDate'     => '2014-06-05', 
       'Amount'       => '1000',
-    ]);
+    ]));
 
     var_dump($response);
 
