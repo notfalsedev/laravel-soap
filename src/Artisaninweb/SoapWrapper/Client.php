@@ -20,7 +20,7 @@ class Client extends SoapClient
    */
   public function __construct($wsdl, $options, array $headers = [])
   {
-    parent::SoapClient($wsdl, $options);
+    parent::__construct($wsdl, $options);
 
     if (!empty($headers)) {
       $this->headers($headers);
