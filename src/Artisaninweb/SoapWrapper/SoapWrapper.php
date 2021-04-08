@@ -137,11 +137,11 @@ class SoapWrapper
       return $client->SoapCall($function, $data, $options);
     });
   }
+
   /**
-   * A easy access call method
+   * Get last request from a service
    *
-   * @param string $call
-   * @param array  $data
+   * @param string $service_name
    *
    * @return mixed
    */
