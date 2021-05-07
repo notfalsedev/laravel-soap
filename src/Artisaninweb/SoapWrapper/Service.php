@@ -173,12 +173,17 @@ class Service
    *
    * @return array
    */
-  public function getClassmap()
+  public function getClassMap()
   {
     $classmap = $this->classmap;
     $classes  = [] ;
 
     if (!empty($classmap)) {
+      if (array_keys($classmap) !== range(0, \count($classmap))) {
+          // If this is an associative array, don't touch it
+          return $classmap;
+      }
+
       foreach ($classmap as $class) {
         // Can't use end because of strict mode :(
         $name = current(array_slice(explode('\\', $class), -1, 1, true));
@@ -214,7 +219,7 @@ class Service
     $options = [
       'trace'      => $this->getTrace(),
       'cache_wsdl' => $this->getCache(),
-      'classmap'   => $this->getClassmap(),
+      'classmap'   => $this->getClassMap(),
     ];
 
     if ($this->certificate) {
