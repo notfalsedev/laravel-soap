@@ -139,6 +139,23 @@ class SoapWrapper
   }
 
   /**
+   * Get last request from a service
+   *
+   * @param string $service_name
+   *
+   * @return mixed
+   */
+  public function getLastCall($service_name)
+  {
+    
+    $service = $this->services[$service_name];
+
+    if (!is_null($service->getClient())) {
+        return $service->getClient()->__getLastRequest();
+    }
+  }
+
+  /**
    * Check if wrapper has service
    *
    * @param string $name
