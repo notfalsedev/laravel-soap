@@ -10,8 +10,9 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0",
-        "ext-soap": "*"
+        "php": ">=5.5",
+        "ext-soap": "*",
+        "illuminate/support": ">=5.5"
     },
     "autoload": {
         "psr-0": {
