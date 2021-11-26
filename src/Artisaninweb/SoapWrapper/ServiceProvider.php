@@ -32,7 +32,7 @@ class ServiceProvider extends LaravelServiceProvider
             ServiceFactory::class
         );
 
-        $this->app->bindIf(
+        $this->app->singleton(
             SoapWrapperContract::class,
             function ($app) {
                 return new SoapWrapper($app[ServiceFactoryContract::class]);
