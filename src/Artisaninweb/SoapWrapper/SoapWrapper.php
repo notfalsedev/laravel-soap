@@ -2,6 +2,7 @@
 
 namespace Artisaninweb\SoapWrapper;
 
+use Artisaninweb\SoapWrapper\Contracts\Service as ServiceContract;
 use Artisaninweb\SoapWrapper\Contracts\SoapWrapper as SoapWrapperContract;
 use Closure;
 use Artisaninweb\SoapWrapper\Contracts\ServiceFactory as ServiceFactoryContract;
@@ -166,7 +167,7 @@ class SoapWrapper implements SoapWrapperContract
 
     /**
      * @param $name
-     * @return mixed
+     * @return ServiceContract
      */
     public function getService($name)
     {

@@ -2,6 +2,7 @@
 
 namespace Artisaninweb\SoapWrapper\Contracts;
 
+use Artisaninweb\SoapWrapper\Contracts\Service as ServiceContract;
 use Artisaninweb\SoapWrapper\Exceptions\ServiceAlreadyExists;
 use Artisaninweb\SoapWrapper\Exceptions\ServiceMethodNotExists;
 use Artisaninweb\SoapWrapper\Exceptions\ServiceNotFound;
@@ -61,4 +62,10 @@ interface SoapWrapper
      * @return bool
      */
     public function has($name);
+
+    /**
+     * @param $name
+     * @return ServiceContract
+     */
+    public function getService($name);
 }
